@@ -18,21 +18,27 @@ struct Card {   //Own data type of Card
 struct Deck {   //Own data type of Deck
     vector<Card> cards;
     string card_back;
-    int max_deck_size = 52; //Sets deck size to 52 (0 - 51) Dont need this as im doing a loop count of 52
+    //int max_deck_size = 52; //Sets deck size to 52 (0 - 51) Dont need this as im doing a loop count of 52
 };
 
 //List of Prototypes
 void initialise(Deck&);
 void print_deck(const Deck&);
 void print_card(const Card&);
+void shuffle(Deck&);
 
 int main()
 {
     Deck my_deck;
     initialise(my_deck);
+    //print_deck(my_deck);
+    shuffle(my_deck);
+    //print_deck(my_deck);
 
     vector<Card> dealer_hand;
     vector<Card> player_hand;
+    cout << '\n';
+    cout << '\n';
     print_deck(my_deck);
 }
 
@@ -61,5 +67,17 @@ void print_deck(const Deck& deck)
 void print_card(const Card& card)
 {
         cout << "Rank " << card.rank << " of " << "Suit " << card.suit << '\n';
+}
+
+void shuffle(Deck& deck)
+{
+    Deck shuffled;
+    while(!deck.cards.empty())
+    {
+        size_t random = rand() % deck.cards.size(); //unsigned int [name] = rand() of remaining deck card size.
+        shuffled.cards.push_back(deck.cards[random]); //add to the vector in shuffled deck. Taking deck.cards and randomising the index. (randomly selecting an index and adding it to the shuffled cards)
+        deck.cards.erase(deck.cards.begin() + random);
+    }
+    deck = shuffled;
 }
 
