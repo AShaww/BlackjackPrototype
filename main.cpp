@@ -26,6 +26,8 @@ void initialise(Deck&);
 void print_deck(const Deck&);
 void print_card(const Card&);
 void shuffle(Deck&);
+void deal_cards(Deck&, vector<Card>&, vector<Card>&, int);
+void print_hand(const vector<Card>&);   //Consted - not changing the hand in the function.
 
 int main()
 {
@@ -37,7 +39,10 @@ int main()
 
     vector<Card> dealer_hand;
     vector<Card> player_hand;
+    deal_cards(my_deck, dealer_hand, player_hand, 7);
+    print_hand(player_hand);
     cout << '\n';
+    print_hand(dealer_hand);
     cout << '\n';
     print_deck(my_deck);
 }
@@ -81,3 +86,21 @@ void shuffle(Deck& deck)
     deck = shuffled;
 }
 
+void deal_cards(Deck& deck, vector<Card>& dealer_hand, vector<Card>& player_hand, int num_of_cards)
+{
+    for (int count = 0; count < num_of_cards; count++)
+    {
+        dealer_hand.push_back(deck.cards[0]);   //Add a card to the hand [top card]
+        deck.cards.erase(deck.cards.begin());
+        player_hand.push_back(deck.cards[0]);   //Add a card to the hand [top card]
+        deck.cards.erase(deck.cards.begin());
+    }
+}
+
+void print_hand(const vector<Card>& hand)
+{
+    for (Card c : hand)
+    {
+        print_card(c);
+    }
+}
